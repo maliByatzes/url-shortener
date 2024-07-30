@@ -15,30 +15,51 @@ app.post('/short', async (c) => {
   const base = process.env.BASE || 'http://localhost:3000';
   const urlId = nanoid();
 
-  if (validateUrl(origUrl)) {
-    try {
-      let url = await Url.findOne({ origUrl });
-      if (url) {
-        return c.json(url, 200);
-      } else {
-        const shortUrl = `${base}/${urlId}`;
-
-        url = new Url({
-          origUrl,
-          shortUrl,
-          urlId
-        });
-
-        await url.save();
-        return c.json(url, 201);
-      }
-      return c.text('');
-    } catch (err: any) {
-      console.error(`Error in short url generator: ${err.message}`);
-      return c.json({ error: "Internal Server Error" }, 500);
-    }
-  } else {
+  if (!validateUrl(origUrl)) {
     return c.json({ error: "Invalid Original Url" }, 400);
+  }
+
+  try {
+    let url = await Url.findOne({ origUrl });
+    if (url) {
+      return c.json(url, 200);
+    } else {
+      const shortUrl = `${base}/${urlId}`;
+
+      url = new Url({
+        origUrl,
+        shortUrl,
+        urlId
+      });
+
+      await url.save();
+      return c.json(url, 201);
+    }
+  } catch (err: any) {
+    console.error(`Error in short url generator: ${err.message}`);
+    return c.json({ error: "Internal Server Error" }, 500);
+  }
+});
+
+app.get('/:urlId', async (c) => {
+  const urlId = c.req.param("urlId");
+  try {
+    const url = await Url.findOne({ urlId });
+    if (!url) {
+      return c.notFound();
+    }
+
+    await Url.updateOne(
+      {
+        urlId,
+      },
+      { $inc: { clicks: 1 } }
+    );
+
+    return c.redirect(url.origUrl);
+  } catch (err: any) {
+    console.error(`Error in get url: ${err.message}`);
+    return c.json({ error: "Internal Server Error" }, 500);
   }
 });
 
