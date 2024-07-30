@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 import { logger } from "hono/logger";
 import { validateUrl } from "./utils/validateUrl";
 import Url from "./models/url.model";
+import { redis } from ".";
 
 const app = new Hono();
 
@@ -20,9 +21,6 @@ app.post('/short', async (c) => {
   }
 
   try {
-    // find the url in the redis
-    // if its not there, store it and then return
-
     let url = await Url.findOne({ origUrl });
     if (url) {
       return c.json(url, 200);
@@ -47,10 +45,19 @@ app.post('/short', async (c) => {
 app.get('/:urlId', async (c) => {
   const urlId = c.req.param("urlId");
   try {
+    const cachedUrl = await redis.get(urlId);
+    if (cachedUrl) {
+      await redis.incr(`${urlId}_clicks`);
+      return c.redirect(cachedUrl);
+    }
+
     const url = await Url.findOne({ urlId });
     if (!url) {
       return c.notFound();
     }
+
+    await redis.set(urlId, url.origUrl);
+    await redis.set(`${urlId}_clicks`, url.clicks);
 
     await Url.updateOne(
       {
@@ -58,6 +65,8 @@ app.get('/:urlId', async (c) => {
       },
       { $inc: { clicks: 1 } }
     );
+
+    await redis.incr(`${urlId}_clicks`);
 
     return c.redirect(url.origUrl);
   } catch (err: any) {
