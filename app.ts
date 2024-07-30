@@ -20,6 +20,9 @@ app.post('/short', async (c) => {
   }
 
   try {
+    // find the url in the redis
+    // if its not there, store it and then return
+
     let url = await Url.findOne({ origUrl });
     if (url) {
       return c.json(url, 200);
