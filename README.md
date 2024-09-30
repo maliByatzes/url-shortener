@@ -1,31 +1,31 @@
-# url-shortener
+# 🦋 url-shortener
 
 A simple URL Shortener Service implemented with Redis caching.
 
-## Features
+## 🦇 Features
 
-- User can submit a long url and recieve a shortened url.
-- User can share that short url which can be used anywhere to access
+- ⭐ User can submit a long url and recieve a shortened url.
+- ⭐ User can share that short url which can be used anywhere to access
 the original url without having to remember the whole url.
-- Caching is implemented for already accessed for very fast access times.
+- ⭐ Caching is implemented for already accessed for very fast access times.
 
-## Tech Stack
+## 🐎 Tech Stack
 
-- **Bun.sh**: A fast all-in-one JavaScript runtime.
-- **Hono.dev**: Ultrafast web framework for the Edges.
-- **Typescript**: JavaScript with syntax for types.
-- **MongoDB**: Document-oriented database for storing data.
-- **Redis**: World’s fastest in-memory database.
+- ⭐ **Bun.sh**: A fast all-in-one JavaScript runtime.
+- ⭐ **Hono.dev**: Ultrafast web framework for the Edges.
+- ⭐ **Typescript**: JavaScript with syntax for types.
+- ⭐ **MongoDB**: Document-oriented database for storing data.
+- ⭐ **Redis**: World’s fastest in-memory database.
 
-## Application
+## 🐺 Application
 
-### Run the application locally
+### 🦅 Run the application locally
 
-#### Prerequisites
+#### 🐝 Prerequisites
 
 - [Bun.sh](https://bun.sh)
 
-#### Instatllation
+#### 🐻‍❄️ Instatllation
 
 1. Clone the repository
    ```sh
@@ -38,7 +38,7 @@ the original url without having to remember the whole url.
    bun install
    ```
 
-#### Configuration
+#### 🐸 Configuration
 
 1. Create an .env file in the project's root directory.
 
@@ -58,7 +58,7 @@ the original url without having to remember the whole url.
    REDIS_URL=...
    ```
 
-#### Usage
+#### 🐗 Usage
 
 1. Run the server:
    ```sh
@@ -79,30 +79,16 @@ the original url without having to remember the whole url.
 
 - Visit the returned short url on your browser to get redirected to the long url.
 
-### Deployed Application
+### 🦕 Deployed Application
 
 - To avoid the tedious setup, the application is already deployed. But of course
-the service im using gve me a not so short url but it does work.
+the service I used gave a not so short base URL but the service works as expected.
 
-#### API Endpoints
-
-- **POST**: `https://short-url-v0sc.onrender.com/short` - post a long url to get a shorter one.
-  ```sh
-  curl --request POST \
-  --url https://short-url-v0sc.onrender.com/short \
-  --header 'Content-Type: application/json' \
-  --data '{
-	"origUrl": "some long valid url here"
-   }'
-  ```
-
-- Visit the returned short url on your browser to get redirected to the long url.
-
-## License
+## 🦝 License
 
 This project is licensed under MIT License.
 
-## Contact
+## 🦦 Contact
 
 - [maliByatzes](mailto:malib2027@gmail.com)
 - [Project repository](https://github.com/maliByatzes/url-shortener)
