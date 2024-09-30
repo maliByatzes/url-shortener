@@ -81,8 +81,21 @@ the original url without having to remember the whole url.
 
 ### 🦕 Deployed Application
 
-- To avoid the tedious setup, the application is already deployed. But of course
-the service I used gave a not so short base URL but the service works as expected.
+- To avoid the tedious setup, the application is already deployed. Use the below POST
+command to requst a shortned URL. But of course the service I used gave a not so
+short base URL but the service works as expected.
+
+- **POST**: `/short` - post a long url to get a shorter one.
+  ```sh
+  curl --request POST \
+  --url https://short-url-v0sc.onrender.com//short \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"origUrl": "some long valid url here"
+   }'
+  ```
+  
+- Visit the returned short url on your browser to get redirected to the long url.
 
 ## 🦝 License
 
