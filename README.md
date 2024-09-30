@@ -88,7 +88,7 @@ short base URL but the service works as expected.
 - **POST**: `/short` - post a long url to get a shorter one.
   ```sh
   curl --request POST \
-  --url https://short-url-v0sc.onrender.com//short \
+  --url https://short-url-v0sc.onrender.com/short \
   --header 'Content-Type: application/json' \
   --data '{
 	"origUrl": "some long valid url here"
